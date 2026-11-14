@@ -462,7 +462,8 @@ export function createScene(canvas, small, force = false) {
     const t = Math.tan((camera.fov * Math.PI) / 360);
     // No celular a coluna ocupa mais o palco (as etiquetas ficam compactas)
     const fitH = stage.width < 640 ? 3.3 : 3.75;
-    stage.distance = Math.max(fitH / t, 2.15 / (t * camera.aspect));
+    const fitW = stage.width < 640 ? 1.3 : 2.15;
+    stage.distance = Math.max(fitH / t, fitW / (t * camera.aspect));
     camera.position.set(0, 0.9, stage.distance);
     camera.lookAt(0, 0.05, 0);
     camera.updateProjectionMatrix();
@@ -698,7 +699,18 @@ function init() {
   const pointer = { x: 0, y: 0 };
   const view = { yaw: 1, pitch: 0 };
 
+  const pinEl = hero.querySelector('.hero__pin');
+  const eyebrow = hero.querySelector('.eyebrow');
+  const title = hero.querySelector('.hero__title');
   const measure = () => {
+    // Celular: o palco da coluna acompanha a altura do bloco eyebrow + título, ao lado dele
+    if (window.innerWidth < 900 && pinEl && eyebrow && title) {
+      const pin = pinEl.getBoundingClientRect();
+      const topY = Math.max(eyebrow.getBoundingClientRect().top - pin.top - 260, 64);
+      const bottomY = Math.max(pin.bottom - title.getBoundingClientRect().bottom - 10, 0);
+      stageEl.style.setProperty('--hero-stage-top', `${Math.round(topY)}px`);
+      stageEl.style.setProperty('--hero-stage-bottom', `${Math.round(bottomY)}px`);
+    }
     const rect = hero.getBoundingClientRect();
     top = rect.top + window.scrollY;
     range = Math.max(1, hero.offsetHeight - window.innerHeight);
