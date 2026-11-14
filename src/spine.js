@@ -460,7 +460,9 @@ export function createScene(canvas, small, force = false) {
     camera.aspect = stage.width / stage.height;
     // Enquadra a coluna já descomprimida (mais alta) com folga para as etiquetas
     const t = Math.tan((camera.fov * Math.PI) / 360);
-    stage.distance = Math.max(3.75 / t, 2.15 / (t * camera.aspect));
+    // No celular a coluna ocupa mais o palco (as etiquetas ficam compactas)
+    const fitH = stage.width < 640 ? 3.3 : 3.75;
+    stage.distance = Math.max(fitH / t, 2.15 / (t * camera.aspect));
     camera.position.set(0, 0.9, stage.distance);
     camera.lookAt(0, 0.05, 0);
     camera.updateProjectionMatrix();
@@ -633,7 +635,7 @@ function createHud(hero, stage) {
         const text = `Tensão ${Math.round(tension * 100)}% · ${fmt(mm, 1)} mm`;
         if (text !== tag.text) {
           tag.text = text;
-          if (tag.value) tag.value.textContent = text;
+          if (tag.value) tag.value.innerHTML = `Tensão ${Math.round(tension * 100)}%<span class="spine-tag__mm"> · ${fmt(mm, 1)} mm</span>`;
           tag.el.classList.toggle('is-hot', tension > 0.35);
         }
         if (project) {
