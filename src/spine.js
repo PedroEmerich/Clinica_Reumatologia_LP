@@ -700,13 +700,13 @@ function init() {
   const view = { yaw: 1, pitch: 0 };
 
   const pinEl = hero.querySelector('.hero__pin');
-  const eyebrow = hero.querySelector('.eyebrow');
+  const inner = hero.querySelector('.hero__inner');
   const title = hero.querySelector('.hero__title');
   const measure = () => {
     // Celular: o palco da coluna acompanha a altura do bloco eyebrow + título, ao lado dele
-    if (window.innerWidth < 900 && pinEl && eyebrow && title) {
+    if (window.innerWidth < 900 && pinEl && inner && title) {
       const pin = pinEl.getBoundingClientRect();
-      const topY = Math.max(eyebrow.getBoundingClientRect().top - pin.top - 260, 64);
+      const topY = Math.max(inner.getBoundingClientRect().top - pin.top, 64);
       const bottomY = Math.max(pin.bottom - title.getBoundingClientRect().bottom - 10, 0);
       stageEl.style.setProperty('--hero-stage-top', `${Math.round(topY)}px`);
       stageEl.style.setProperty('--hero-stage-bottom', `${Math.round(bottomY)}px`);
