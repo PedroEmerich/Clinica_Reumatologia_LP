@@ -1597,19 +1597,6 @@ html:not(.journey-pinned) .step__body { margin-top: 1.5rem; }
 }
 .dial__inner circle,
 .dial__inner path { opacity: .55; }
-.dial__mono {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--serif);
-  font-size: clamp(5rem, 2.5rem + 8vw, 10.5rem);
-  line-height: 1;
-  letter-spacing: -.04em;
-  transform: translateZ(40px);
-}
-.dial__mono i { font-style: italic; color: var(--accent); }
 .dial__cap {
   position: absolute;
   left: 50%;
@@ -1621,8 +1608,20 @@ html:not(.journey-pinned) .step__body { margin-top: 1.5rem; }
   color: var(--muted);
   transform: translateX(-50%) translateZ(20px);
 }
-.dial__cap--t { top: 29%; }
-.dial__cap--b { bottom: 29%; }
+.dial__cap--t { top: 13.4%; }
+.dial__cap--b { bottom: 13.4%; }
+/* Foto da médica dentro do anel interno do mostrador */
+.dial__photo {
+  position: absolute;
+  inset: 21.5%;
+  width: 57%;
+  height: 57%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 50% 30%;
+  transform: translateZ(30px);
+  box-shadow: 0 24px 50px -28px rgba(42, 42, 42, .45);
+}
 
 .doctor__role {
   margin: 1.6rem 0 2rem;
@@ -2079,8 +2078,28 @@ html.no-js .wa-float { opacity: 1; transform: none; }
   .hero__meta { grid-template-columns: repeat(3, auto); justify-content: start; }
   .gauge { grid-column: 1 / -1; justify-self: stretch; width: auto; }
 
-  .doctor__grid { grid-template-columns: 1fr; }
-  .dial { max-width: 420px; }
+  /* Médica: foto ao lado do nome; texto, dados e botão logo abaixo */
+  .doctor__grid {
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+    grid-template-areas:
+      "label label"
+      "visual name"
+      "visual role"
+      "text text"
+      "facts facts"
+      "cta cta";
+    align-items: center;
+    gap: 0 1.5rem;
+  }
+  .doctor__body { display: contents; }
+  .doctor__visual { grid-area: visual; }
+  .doctor__body > .label { grid-area: label; margin-bottom: 1.25rem; }
+  .doctor__body > .h2 { grid-area: name; align-self: end; font-size: clamp(2rem, 7vw, 3.4rem); }
+  .doctor__body > .doctor__role { grid-area: role; align-self: start; margin: .9rem 0 0; }
+  .doctor__body > .doctor__text { grid-area: text; margin-top: 2rem; }
+  .doctor__body > .facts { grid-area: facts; }
+  .doctor__body > div:last-child { grid-area: cta; }
+  .dial { max-width: 320px; }
 
   .faq__grid { grid-template-columns: 1fr; }
   .faq__head { position: static; }
@@ -2180,8 +2199,10 @@ html.no-js .wa-float { opacity: 1; transform: none; }
   .gridlines { display: none; }
 
   /* Demais seções no celular */
-  .doctor__grid { gap: 2rem; }
-  .dial { max-width: 270px; }
+  .doctor__grid { gap: 0 1rem; }
+  .doctor__body > .h2 { font-size: clamp(1.7rem, 8.4vw, 2.3rem); }
+  .doctor__body > .doctor__role { font-size: .6rem; letter-spacing: .1em; line-height: 1.6; }
+  .dial__cap { display: none; }
   .wa-float { width: 3rem; height: 3rem; }
   .wa-float svg { width: 22px; height: 22px; }
 
