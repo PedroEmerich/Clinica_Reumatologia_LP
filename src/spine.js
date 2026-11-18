@@ -706,8 +706,9 @@ function init() {
     // Celular: o palco da coluna acompanha a altura do bloco eyebrow + título, ao lado dele
     if (window.innerWidth < 900 && pinEl && inner && title) {
       const pin = pinEl.getBoundingClientRect();
-      const topY = Math.max(inner.getBoundingClientRect().top - pin.top, 64);
-      const bottomY = Math.max(pin.bottom - title.getBoundingClientRect().bottom - 10, 0);
+      const meta = hero.querySelector('.hero__meta');
+      const topY = Math.max(title.getBoundingClientRect().top - pin.top - 10, 64);
+      const bottomY = Math.max(pin.bottom - (meta ? meta.getBoundingClientRect().top : title.getBoundingClientRect().bottom) + 6, 0);
       stageEl.style.setProperty('--hero-stage-top', `${Math.round(topY)}px`);
       stageEl.style.setProperty('--hero-stage-bottom', `${Math.round(bottomY)}px`);
     }

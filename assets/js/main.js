@@ -109,7 +109,7 @@
           });
         } else if (node.nodeType === Node.ELEMENT_NODE) {
           if (node.tagName === 'BR') {
-            dest.appendChild(document.createElement('br'));
+            dest.appendChild(node.cloneNode(false));
             return;
           }
           const clone = node.cloneNode(false);
